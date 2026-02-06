@@ -4,8 +4,8 @@ import { addProduct, buildCategoriesFromProducts, deleteProduct, fetchProducts, 
 const STORAGE_KEYS = {
   BOOKMARKS: 'markflow_bookmarks',
   CATEGORIES: 'markflow_categories',
-  USER: 'markflow_user', // For simple auth persistence
-  INTERESTS: 'markflow_interests', // Added for Explore page persistence
+  USER: 'markflow_user', 
+  INTERESTS: 'markflow_interests',
 };
 
 const FALLBACK_CATEGORIES: Category[] = [];
@@ -16,6 +16,7 @@ const rebuildCategoryCounts = (
   bookmarks: Bookmark[],
   existing: Category[]
 ): Category[] => {
+
   const counts: Record<string, number> = {};
   bookmarks.forEach((b) => {
     counts[b.category] = (counts[b.category] || 0) + 1;
@@ -51,17 +52,13 @@ export const storage = {
     localStorage.removeItem(STORAGE_KEYS.USER);
   },
 
-  /**
-   * Initialize Data
-   * Checks LocalStorage. If empty, fetches from DummyJSON.
-   */
+  
   initializeData: async (): Promise<{ bookmarks: Bookmark[]; categories: Category[] }> => {
     if (typeof window === 'undefined') return { bookmarks: [], categories: [] };
 
     const storedBookmarks = localStorage.getItem(STORAGE_KEYS.BOOKMARKS);
     const storedCategories = localStorage.getItem(STORAGE_KEYS.CATEGORIES);
 
-    // If data exists, return it
     if (storedBookmarks && storedCategories) {
       return {
         bookmarks: JSON.parse(storedBookmarks),
@@ -69,7 +66,6 @@ export const storage = {
       };
     }
 
-    // Otherwise, fetch seed data
     try {
       const products = await fetchProducts(20);
       const mappedBookmarks: Bookmark[] = products.map(mapProductToBookmark);
@@ -125,8 +121,7 @@ export const storage = {
     try {
       await deleteProduct(id);
     } catch {
-      // DummyJSON doesn't persist added products, so delete can fail for new items.
-      // We still remove it locally to keep the UI consistent.
+      // nothing to delete if locally created product
     }
     const bookmarks = storage.getBookmarks();
     const newBookmarks = bookmarks.filter((b) => b.id !== id);
@@ -150,7 +145,6 @@ export const storage = {
     localStorage.setItem(STORAGE_KEYS.CATEGORIES, JSON.stringify(newCategories));
   },
 
-  // --- NEW METHODS FOR EXPLORE PAGE ---
   
   getInterests: (): string[] => {
     if (typeof window === 'undefined') return [];

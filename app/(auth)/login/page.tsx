@@ -10,7 +10,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-
+  //takes username and password emilys ,emilyspass and stores the token in localsotrage
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");

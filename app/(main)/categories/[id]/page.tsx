@@ -53,14 +53,14 @@ export default function CategoryDetailPage() {
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    // 1. Find the category info first
+    // fetching the locally stored data
     const allCategories = storage.getCategories();
     const foundCategory = allCategories.find((c: any) => c.id === categoryId);
 
     if (foundCategory) {
       setCategory(foundCategory);
 
-      // 2. Filter bookmarks that match this category name
+      //filterong based on the selected category
       const allBookmarks = storage.getBookmarks();
       const filtered = allBookmarks.filter(
         (b: any) => b.category === foundCategory.name,
@@ -98,9 +98,9 @@ export default function CategoryDetailPage() {
 
   return (
     <div className="space-y-8 pb-10">
-      {/* Header */}
+      {/*header */}
       <div className="flex flex-col gap-6">
-        {/* Back & Title Row */}
+        {/*back button and name */}
         <div className="flex items-center gap-4">
           <button
             onClick={() => router.back()}
@@ -116,7 +116,7 @@ export default function CategoryDetailPage() {
               </h1>
             </div>
 
-            {/* Controls Row (Search & View Toggle) */}
+            {/* search and toggle*/}
             <div className="flex items-center justify-between">
               <div className="relative w-full max-w-md">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -158,7 +158,7 @@ export default function CategoryDetailPage() {
         </div>
       </div>
 
-      {/* Bookmarks Grid */}
+      {/* bookmarks*/}
       {filteredBookmarks.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 text-center border-2 border-dashed border-[#262626] rounded-xl bg-[#1E1E1E]">
           <p className="text-gray-500 text-lg">

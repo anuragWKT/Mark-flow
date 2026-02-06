@@ -92,15 +92,15 @@ export default function AddCategoryModal({ isOpen, onClose, onSave }: AddCategor
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
-      <div className="w-full max-w-md bg-[#1E1E1E] border border-[#333] rounded-2xl p-6 shadow-2xl relative animate-in fade-in zoom-in duration-200">
-        {/* Header */}
+      <div className="w-full max-w-[38%] bg-[#1E1E1E] border border-[#333] rounded-2xl p-20 shadow-2xl relative animate-in fade-in zoom-in duration-200">
+        {/*header*/}
         <div className="text-center mb-6">
           <h2 className="text-xl font-bold text-white">Add New Category</h2>
           <p className="text-sm text-gray-400 mt-1">Create a new category to organize your bookmarks</p>
         </div>
 
         <div className="space-y-6">
-          {/* Name Input */}
+          {/*input for category name*/}
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-300">Category Name *</label>
             <input
@@ -112,7 +112,7 @@ export default function AddCategoryModal({ isOpen, onClose, onSave }: AddCategor
             />
           </div>
 
-          {/* Icon Picker */}
+          {/*selection for category icon*/}
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-300">Choose Icon</label>
             <div className="grid grid-cols-6 gap-2 p-2 border border-[#333] rounded-lg bg-[#121212]">
@@ -133,15 +133,15 @@ export default function AddCategoryModal({ isOpen, onClose, onSave }: AddCategor
             </div>
           </div>
 
-          {/* Color Picker */}
+          {/*color picker*/}
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-300">Choose color</label>
-            <div className="flex flex-wrap gap-3 p-3 border border-[#333] rounded-lg bg-[#121212]">
+            <div className="flex flex-wrap gap-3 p-3 border border-[#333] rounded-lg bg-[#121212] justify-center">
               {COLORS.map((item) => (
                 <button
                   key={item.id}
                   onClick={() => setSelectedColor(item.id)}
-                  className={`w-8 h-8 rounded-full transition-transform hover:scale-110 ${item.class} ${
+                  className={`w-7 h-7 rounded-full transition-transform hover:scale-110 ${item.class} ${
                     selectedColor === item.id ? "ring-2 ring-white ring-offset-2 ring-offset-[#121212]" : ""
                   }`}
                   title={item.id}
@@ -150,7 +150,7 @@ export default function AddCategoryModal({ isOpen, onClose, onSave }: AddCategor
             </div>
           </div>
 
-          {/* Actions */}
+
           <div className="flex flex-col gap-3 pt-2">
             <button
               onClick={handleSubmit}

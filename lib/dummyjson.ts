@@ -4,9 +4,6 @@ const API_BASE = "https://dummyjson.com";
 
 export async function fetchProducts(limit = 20): Promise<DummyProduct[]> {
   const res = await fetch(`${API_BASE}/products?limit=${limit}`);
-  if (!res.ok) {
-    throw new Error("Failed to fetch products");
-  }
   const data = await res.json();
   return data.products as DummyProduct[];
 }
@@ -25,9 +22,6 @@ export async function addProduct(payload: ProductPayload): Promise<DummyProduct>
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
   });
-  if (!res.ok) {
-    throw new Error("Failed to add product");
-  }
   return (await res.json()) as DummyProduct;
 }
 
@@ -35,9 +29,7 @@ export async function deleteProduct(id: string): Promise<{ id: number; isDeleted
   const res = await fetch(`${API_BASE}/products/${id}`, {
     method: "DELETE",
   });
-  if (!res.ok) {
-    throw new Error("Failed to delete product");
-  }
+ 
   return (await res.json()) as { id: number; isDeleted: boolean };
 }
 

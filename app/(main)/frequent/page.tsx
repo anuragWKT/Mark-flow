@@ -26,7 +26,7 @@ export default function FrequentPage() {
 
   return (
     <div className="space-y-8 pb-10">
-      {/* Header */}
+      {/*header */}
       <div className="flex flex-col gap-2">
         <div className="flex items-center justify-between">
           <div>
@@ -36,7 +36,7 @@ export default function FrequentPage() {
             <p className="text-gray-400 mt-1">Your most visited bookmarks, always at hand.</p>
           </div>
 
-          {/* Controls */}
+          {/*control buttons */}
           <div className="flex items-center gap-3">
             <button className="flex items-center gap-2 px-4 py-2 bg-[#262626] border border-[#333] hover:border-gray-600 rounded-lg text-gray-300 transition-colors text-sm font-medium">
               <ArrowUpDown size={16} />
@@ -69,7 +69,7 @@ export default function FrequentPage() {
         </div>
       </div>
 
-      {/* Content */}
+      {/* main contents */}
       {frequentBookmarks.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 text-center border-2 border-dashed border-[#262626] rounded-xl bg-[#1E1E1E]">
           <Clock className="w-12 h-12 text-gray-600 mb-4" />

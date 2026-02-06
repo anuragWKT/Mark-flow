@@ -1,14 +1,10 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { 
-  Moon, 
-  Globe, 
   Download, 
   Upload, 
   Trash2, 
-  ChevronDown, 
-  Check, 
   Star 
 } from "lucide-react";
 
@@ -17,16 +13,11 @@ import { storage } from "../../../lib/storage";
 
 
 export default function SettingsPage() {
-  const fileInputRef = useRef<HTMLInputElement>(null);
   
-  // State for settings
-  const [defaultCategory, setDefaultCategory] = useState("Uncategorized");
   const [autoFetch, setAutoFetch] = useState(true);
   const [defaultRating, setDefaultRating] = useState(0);
   const [darkMode, setDarkMode] = useState(true);
-  const [language, setLanguage] = useState("English");
 
-  // Handlers
   const handleExport = () => {
     const bookmarks = storage.getBookmarks();
     const dataStr = JSON.stringify(bookmarks, null, 2);
@@ -35,31 +26,10 @@ export default function SettingsPage() {
     
     const link = document.createElement("a");
     link.href = url;
-    link.download = `markflow-backup-${new Date().toISOString().split('T')[0]}.json`;
+    link.download = "markflow-backup.json";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-  };
-
-  const handleImportClick = () => {
-    fileInputRef.current?.click();
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      try {
-        const json = JSON.parse(event.target?.result as string);
-        storage.saveBookmarks?.(json);
-        alert("Bookmarks imported successfully!");
-      } catch (err) {
-        alert("Invalid JSON file");
-      }
-    };
-    reader.readAsText(file);
   };
 
   const handleClearAll = () => {
@@ -72,38 +42,25 @@ export default function SettingsPage() {
 
   return (
     <div className="max-w-4xl mx-auto space-y-8 pb-10">
-      {/* Header */}
+      {/*headerr */}
       <div>
         <h1 className="text-3xl font-bold text-white tracking-tight">Settings</h1>
         <p className="text-gray-400 mt-1">Manage your app preferences</p>
       </div>
 
-      {/* Group 1: General Settings */}
+      {/*general settings */}
       <div className="border border-[#333] rounded-xl bg-[#1E1E1E] overflow-hidden">
         <div className="px-6 py-4 border-b border-[#333] bg-[#262626]">
           <h2 className="text-lg font-semibold text-white">General Settings</h2>
         </div>
         
         <div className="p-6 space-y-8">
-          {/* Default Category */}
           <div className="flex items-center justify-between">
             <label className="text-gray-300 font-medium">Default category</label>
-            <div className="relative w-64">
-              <select
-                value={defaultCategory}
-                onChange={(e) => setDefaultCategory(e.target.value)}
-                className="w-full appearance-none bg-[#121212] border border-[#333] text-white px-4 py-2.5 rounded-lg focus:outline-none focus:border-[#3B82F6]"
-              >
-                <option>Uncategorized</option>
-                <option>Development</option>
-                <option>Design</option>
-                <option>Inspiration</option>
-              </select>
-              <ChevronDown className="absolute right-3 top-3 h-4 w-4 text-gray-500 pointer-events-none" />
-            </div>
+            <span className="text-gray-300">Uncategorized</span>
           </div>
 
-          {/* Auto-fetch Toggle */}
+          {/* toggle button */}
           <div className="flex items-center justify-between">
             <label className="text-gray-300 font-medium">Auto-fetch website data</label>
             <button
@@ -120,7 +77,7 @@ export default function SettingsPage() {
             </button>
           </div>
 
-          {/* Default Rating */}
+          {/* rating*/}
           <div className="flex items-center justify-between">
             <label className="text-gray-300 font-medium">Default rating</label>
             <div className="flex gap-1">
@@ -143,14 +100,14 @@ export default function SettingsPage() {
         </div>
       </div>
 
-      {/* Group 2: Appearance */}
+      {/*second box */}
       <div className="border border-[#333] rounded-xl bg-[#1E1E1E] overflow-hidden">
         <div className="px-6 py-4 border-b border-[#333] bg-[#262626]">
           <h2 className="text-lg font-semibold text-white">Appearance</h2>
         </div>
         
         <div className="p-6 space-y-8">
-          {/* Dark Mode */}
+          {/*dark mode light mode*/}
           <div className="flex items-center justify-between">
             <label className="text-gray-300 font-medium">Dark Mode</label>
             <button
@@ -167,27 +124,15 @@ export default function SettingsPage() {
             </button>
           </div>
 
-          {/* Language */}
+          {/*language*/}
           <div className="flex items-center justify-between">
             <label className="text-gray-300 font-medium">Language</label>
-            <div className="relative w-64">
-              <select
-                value={language}
-                onChange={(e) => setLanguage(e.target.value)}
-                className="w-full appearance-none bg-[#121212] border border-[#333] text-white px-4 py-2.5 rounded-lg focus:outline-none focus:border-[#3B82F6]"
-              >
-                <option>English</option>
-                <option>Spanish</option>
-                <option>French</option>
-                <option>German</option>
-              </select>
-              <ChevronDown className="absolute right-3 top-3 h-4 w-4 text-gray-500 pointer-events-none" />
-            </div>
+            <span className="text-gray-300">English</span>
           </div>
         </div>
       </div>
 
-      {/* Group 3: Data Management */}
+      {/*export,import,delete*/}
       <div className="border border-[#333] rounded-xl bg-[#1E1E1E] overflow-hidden">
         <div className="px-6 py-4 border-b border-[#333] bg-[#262626]">
           <h2 className="text-lg font-semibold text-white">Bookmark Management</h2>
@@ -208,15 +153,8 @@ export default function SettingsPage() {
           <div className="flex items-center justify-between">
             <label className="text-gray-300 font-medium">Import bookmarks</label>
             <div>
-              <input 
-                type="file" 
-                ref={fileInputRef} 
-                onChange={handleFileChange} 
-                className="hidden" 
-                accept=".json"
-              />
               <button
-                onClick={handleImportClick}
+                disabled
                 className="flex items-center gap-2 px-4 py-2 bg-[#262626] border border-[#333] hover:bg-[#333] text-white rounded-lg font-medium transition-colors text-sm"
               >
                 <Download size={16} />

@@ -3,8 +3,7 @@
 import { useState, useEffect } from "react";
 import { 
   Plus, 
-  Search, 
-  List, 
+  Search,  
   Folder, 
   Laptop, 
   Palette, 
@@ -25,7 +24,6 @@ import AddCategoryModal from "../../../components/AddCategoryModal";
 import { storage } from "../../../lib/storage";
 import { Category } from "../../../lib/types";
 
-// Helper to map string names to components
 const IconMap: Record<string, any> = {
   'folder': Folder,
   'laptop': Laptop,
@@ -53,12 +51,7 @@ export default function CategoriesPage() {
 
   const loadCategories = () => {
     const data = storage.getCategories();
-    //all category
-    const allCategory = { id: 'all', name: 'All', icon: 'folder', count: data.reduce((acc: number, c: any) => acc + c.count, 0), color: 'text-white' };
-    
-    // We filter out 'All' if it was already saved to avoid duplicates, then prepend it
-    const filtered = data.filter((c: any) => c.name !== 'All');
-    setCategories([allCategory, ...filtered]);
+    setCategories(data);
   };
 
   const handleSaveCategory = (newCategory: Category) => {
@@ -72,7 +65,7 @@ export default function CategoriesPage() {
 
   return (
     <div className="space-y-8 pb-10">
-      {/* Header */}
+      {/* header */}
       <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
         <div>
           <h1 className="text-3xl font-bold text-white tracking-tight">Categories</h1>
@@ -80,7 +73,7 @@ export default function CategoriesPage() {
         </div>
 
         <div className="flex items-center gap-3 w-full md:w-auto">
-          {/* Add Button */}
+          {/* add  new button */}
           <button 
             className="flex items-center gap-2 px-4 py-2.5 bg-white hover:bg-gray-100 text-black rounded-lg font-medium transition-colors text-sm whitespace-nowrap"
             onClick={() => setIsModalOpen(true)}
@@ -89,7 +82,7 @@ export default function CategoriesPage() {
             <span>Add new</span>
           </button>
 
-          {/* Search Bar */}
+          {/* search */}
           <div className="relative flex-1 md:w-64">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <Search className="h-4 w-4 text-gray-500" />
@@ -102,15 +95,10 @@ export default function CategoriesPage() {
               placeholder="Search categories"
             />
           </div>
-
-          {/* List View Toggle (Visual only for now) */}
-          <button className="p-2.5 border border-[#333] rounded-lg bg-[#121212] text-gray-400 hover:text-white hover:bg-[#262626] transition-colors">
-            <List size={18} />
-          </button>
         </div>
       </div>
 
-      {/* Categories Grid */}
+      {/* showing categories */}
       <div className="grid grid-cols-3 gap-6">
         {filteredCategories.map((cat) => {
           const IconComponent = IconMap[cat.icon] || Folder;
@@ -121,7 +109,7 @@ export default function CategoriesPage() {
               href={`/categories/${cat.id}`}
               className="group relative p-5 bg-[#262626] border border-[#333] hover:border-gray-600 rounded-xl transition-all cursor-pointer flex flex-col justify-between h-32"
             >
-              {/* Top Row: Name & Icon */}
+              {/* name and icon*/}
               <div className="flex justify-between items-start">
                 <h3 className="font-semibold text-white text-xl tracking-wide group-hover:text-[#3B82F6] transition-colors">
                   {cat.name}
@@ -132,7 +120,7 @@ export default function CategoriesPage() {
                 />
               </div>
 
-              {/* Bottom Row: Count */}
+              {/* count of bookmarks */}
               <div>
                 <span className=" items-center justify-center px-2 py-1 bg-[#1E1E1E] rounded text-xs text-gray-400 font-medium border border-[#333]">
                   {cat.count} bookmarks
@@ -143,7 +131,7 @@ export default function CategoriesPage() {
         })}
       </div>
 
-      {/* Add Category Modal */}
+      {/* modal to add category */}
       <AddCategoryModal 
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

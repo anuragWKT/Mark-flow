@@ -12,6 +12,7 @@ import { Bookmark } from "../../lib/types";
 export default function HomePage() {
   const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
   useEffect(() => {
     const data = storage.getBookmarks();
@@ -36,9 +37,12 @@ export default function HomePage() {
 
           {/* controls */}
           <div className="flex items-center gap-3">
-            <button className="flex items-center gap-2 px-4 py-2 bg-[#262626] border border-[#333] hover:border-gray-600 rounded-lg text-gray-300 transition-colors text-sm font-medium">
+            <button
+              onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
+              className="flex items-center gap-2 px-4 py-2 bg-[#262626] border border-[#333] hover:border-gray-600 rounded-lg text-gray-300 transition-colors text-sm font-medium"
+            >
               <ArrowUpDown size={16} />
-              <span>Sort</span>
+              <span>Sort: {sortOrder === "asc" ? "A-Z" : "Z-A"}</span>
             </button>
 
             <div className="flex bg-[#262626] p-1 rounded-lg border border-[#333]">
@@ -81,7 +85,13 @@ export default function HomePage() {
               : "grid-cols-1"
           }`}
         >
-          {bookmarks.map((bookmark) => (
+          {[...bookmarks]
+            .sort((a, b) =>
+              sortOrder === "asc"
+                ? a.title.localeCompare(b.title)
+                : b.title.localeCompare(a.title)
+            )
+            .map((bookmark) => (
             <div key={bookmark.id} className={viewMode === "list" ? "max-w-8xl" : ""}>
               <BookmarkCard bookmark={bookmark} onDelete={handleDelete} />
             </div>

@@ -1,13 +1,22 @@
 "use client";
 
-import { Search, Plus } from "lucide-react";
+import { LogOut, Search, Plus } from "lucide-react";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { storage } from "../lib/storage";
 
 export default function Topbar() {
+  const router = useRouter();
+
+  const handleLogout = () => {
+    storage.logout();
+    router.replace("/login");
+  };
+
   return (
     <header className="sticky top-0 z-40 bg-[#1E1E1E] border-b border-[#262626] h-20 px-8 flex items-center justify-between">
-      {/* Search Bar */}
+      {/*search */}
       <div className="relative w-96">
         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
           <Search className="h-5 w-5 text-gray-500" />
@@ -19,7 +28,6 @@ export default function Topbar() {
         />
       </div>
 
-      {/* Action Buttons */}
       <div className="flex items-center gap-4">
         <Link
           href="/add-bookmark"
@@ -28,6 +36,14 @@ export default function Topbar() {
           <Plus size={18} />
           <span>New Bookmark</span>
         </Link>
+
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-2 bg-[#262626] hover:bg-[#333] text-gray-200 px-4 py-2.5 rounded-lg font-medium transition-colors text-sm border border-[#333]"
+        >
+          <LogOut size={18} />
+          <span>Logout</span>
+        </button>
       </div>
     </header>
   );

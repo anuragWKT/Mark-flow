@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowRight,
   Banknote,
@@ -11,7 +11,6 @@ import {
   Dumbbell,
   ExternalLink,
   Folder,
-  Heart,
   Laptop,
   Lightbulb,
   Palette,
@@ -88,15 +87,12 @@ export default function ExplorePage() {
     }
   };
 
-  const categoryColor = useMemo(() => {
-    const map = new Map(categories.map((c) => [c.name, c.color]));
-    return map;
-  }, [categories]);
+  const categoryColor = new Map(categories.map((c) => [c.name, c.color]));
 
   const filteredProducts = selectedCategories.length
     ? products.filter((p) => selectedCategories.includes(p.category))
     : products;
-
+//selection html
   if (view === "selection") {
     return (
       <div className="max-w-5xl mx-auto py-10">
@@ -107,7 +103,7 @@ export default function ExplorePage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-12">
+        <div className="grid grid-cols-3  gap-4 mb-12">
           {categories.map((category) => {
             const isSelected = selectedCategories.includes(category.name);
             const Icon = IconMap[category.icon] || Folder;
@@ -154,7 +150,7 @@ export default function ExplorePage() {
       </div>
     );
   }
-
+//view feed html
   return (
     <div className="space-y-8 pb-10">
       <div className="flex flex-col gap-6">
@@ -164,28 +160,12 @@ export default function ExplorePage() {
             Change Interests
           </button>
         </div>
-
-        <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
-          {selectedCategories.map((name) => {
-            const iconId = categories.find((c) => c.name === name)?.icon || "folder";
-            const Icon = IconMap[iconId] || Folder;
-            return (
-              <button
-                key={name}
-                className="flex items-center gap-2 px-4 py-2 bg-[#262626] border border-[#333] hover:border-gray-500 rounded-lg text-gray-200 whitespace-nowrap transition-colors"
-              >
-                <Icon size={16} />
-                <span className="text-sm font-medium">{name}</span>
-              </button>
-            );
-          })}
-        </div>
       </div>
 
       {isLoading ? (
         <div className="text-center text-gray-400">Loading explore feed...</div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        <div className="grid grid-cols-4 gap-6">
           {filteredProducts.map((item) => (
             <div key={item.id} className="group bg-[#1E1E1E] border border-[#333] hover:border-gray-600 rounded-xl p-5 transition-all">
               <div className="flex justify-between items-start mb-4">
@@ -223,11 +203,6 @@ export default function ExplorePage() {
                 >
                   <BookmarkPlus size={16} />
                   <span>{savingId === item.id ? "Saving..." : "Save"}</span>
-                </button>
-
-                <button className="flex items-center gap-2 text-gray-400 hover:text-red-500 transition-colors text-sm font-medium">
-                  <Heart size={16} />
-                  <span>Like</span>
                 </button>
 
                 <a

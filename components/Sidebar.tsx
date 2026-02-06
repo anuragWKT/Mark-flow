@@ -8,8 +8,7 @@ import {
   Clock, 
   Compass, 
   PlusCircle, 
-  Settings,
-  Waves
+  Settings
 } from "lucide-react";
 
 export default function Sidebar() {
@@ -24,14 +23,14 @@ export default function Sidebar() {
 
   return (
     <aside className="w-64 h-screen fixed left-0 top-0 bg-[#1E1E1E] border-r border-[#262626] flex flex-col z-50">
-      {/* Logo Section */}
+      {/*main logo*/}
       <div className="p-8 pb-4">
         <div className="flex flex-col items-center justify-center gap-2 mb-8">
           <img src="Logo.png" alt="" />
         </div>
       </div>
 
-      {/* Main Navigation */}
+      {/* navigation */}
       <nav className="flex-1 px-4 space-y-2">
         {navItems.map((item) => {
           const isActive = pathname === item.href;
@@ -59,8 +58,6 @@ export default function Sidebar() {
             </Link>
           );
         })}
-
-        {/* Add Bookmark Action */}
         <Link
           href="/add-bookmark"
           className={`
@@ -97,10 +94,10 @@ export default function Sidebar() {
       </nav>
 
       <div className="p-4 space-y-4">
-        {/* Footer */}
+        {/*footer*/}
         <div className="px-4 py-6 border-t border-[#262626]">
           <p className="text-xs text-gray-600">
-            © 2025 Markflow.
+            2025 Markflow.
             <br />
             <span className="underline cursor-pointer hover:text-gray-500">Zakaria Zyami</span>
           </p>

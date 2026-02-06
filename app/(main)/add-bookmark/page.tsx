@@ -11,7 +11,7 @@ import { Category, Bookmark } from "../../../lib/types";
 export default function AddBookmarkPage() {
   const router = useRouter();
   
-  // Form State
+  //form
   const [url, setUrl] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -20,7 +20,7 @@ export default function AddBookmarkPage() {
   const [isFetching, setIsFetching] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   
-  // Data State
+  //data
   const [categories, setCategories] = useState<Category[]>([]);
 
   const getHostname = (value: string) => {
@@ -37,7 +37,6 @@ export default function AddBookmarkPage() {
   };
 
   useEffect(() => {
-    
     const cats = storage.getCategories();
     setCategories(cats);
   }, []);
@@ -94,14 +93,14 @@ export default function AddBookmarkPage() {
 
   return (
     <div className="max-w-4xl  space-y-8 pb-10">
-      {/* Header */}
+      {/*header*/}
       <div>
         <h1 className="text-3xl font-bold text-white tracking-tight">Add New Bookmark</h1>
         <p className="text-gray-400 mt-1">Save a new bookmark to your collection</p>
       </div>
 
       <div className="space-y-6">
-        {/* URL Input */}
+        {/*input for url*/}
         <div className="space-y-2">
           <label className="text-sm font-medium text-gray-300">URL *</label>
           <div className="flex gap-4">
@@ -136,7 +135,7 @@ export default function AddBookmarkPage() {
           </div>
         </div>
 
-        {/* Name Input */}
+        {/* input for name */}
         <div className="space-y-2 max-w-2xl">
           <label className="text-sm font-medium text-gray-300">Name</label>
           <div className="relative">
@@ -151,7 +150,7 @@ export default function AddBookmarkPage() {
           </div>
         </div>
 
-        {/* Description Input */}
+        {/* input for description */}
         <div className="space-y-2 max-w-2xl">
           <label className="text-sm font-medium text-gray-300">Description</label>
           <div className="relative">
@@ -166,13 +165,12 @@ export default function AddBookmarkPage() {
           </div>
         </div>
 
-        {/* Logo & Rating Row */}
+        {/* logo and rating */}
         <div className="flex gap-12">
-          {/* Logo Preview */}
+          {/* logo */}
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-300">Logo</label>
             <div className="w-16 h-16 rounded-xl bg-[#262626] border border-[#333] flex items-center justify-center overflow-hidden">
-               {/* Simple logic to show logo preview if URL exists */}
                <img 
                    src={getLogoUrl(url)} 
                    alt="Logo" 
@@ -181,7 +179,7 @@ export default function AddBookmarkPage() {
             </div>
           </div>
 
-          {/* Rating */}
+          {/*rating stars */}
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-300">Bookmark Rating</label>
             <div className="flex items-center gap-2 mt-2">
@@ -203,7 +201,7 @@ export default function AddBookmarkPage() {
           </div>
         </div>
 
-        {/* Category Dropdown */}
+        {/* dropdown for category */}
         <div className="space-y-2 max-w-2xl">
           <label className="text-sm font-medium text-gray-300">Category *</label>
           <div className="relative">
@@ -223,7 +221,7 @@ export default function AddBookmarkPage() {
           </div>
         </div>
 
-        {/* Submit Button */}
+        {/* submit */}
         <button
           onClick={handleSave}
           disabled={isSaving}
