@@ -99,7 +99,7 @@ export default function Sidebar() {
           <p className="text-xs text-gray-600">
             2025 Markflow.
             <br />
-            <span className="underline cursor-pointer hover:text-gray-500">Zakaria Zyami</span>
+            <span className="underline cursor-pointer hover:text-gray-500">Anurag Shetty</span>
           </p>
         </div>
       </div>
