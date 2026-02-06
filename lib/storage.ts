@@ -67,7 +67,7 @@ export const storage = {
     }
 
     try {
-      const products = await fetchProducts(20);
+      const products = await fetchProducts();
       const mappedBookmarks: Bookmark[] = products.map(mapProductToBookmark);
       const categories = buildCategoriesFromProducts(products);
 

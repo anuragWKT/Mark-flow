@@ -2,7 +2,7 @@ import { Bookmark, Category, DummyProduct } from "./types";
 
 const API_BASE = "https://dummyjson.com";
 
-export async function fetchProducts(limit = 20): Promise<DummyProduct[]> {
+export async function fetchProducts(limit = 100): Promise<DummyProduct[]> {
   const res = await fetch(`${API_BASE}/products?limit=${limit}`);
   const data = await res.json();
   return data.products as DummyProduct[];
