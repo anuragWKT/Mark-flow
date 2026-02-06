@@ -38,10 +38,6 @@ export default function FrequentPage() {
 
           {/*control buttons */}
           <div className="flex items-center gap-3">
-            <button className="flex items-center gap-2 px-4 py-2 bg-[#262626] border border-[#333] hover:border-gray-600 rounded-lg text-gray-300 transition-colors text-sm font-medium">
-              <ArrowUpDown size={16} />
-              <span>Sort</span>
-            </button>
 
             <div className="flex bg-[#262626] p-1 rounded-lg border border-[#333]">
               <button
